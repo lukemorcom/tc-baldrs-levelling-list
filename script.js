@@ -2,6 +2,14 @@ let tableData = [];
 let timer;
 let statusUpdateInterval;
 
+window.addEventListener("DOMContentLoaded", function() {
+  const storedApiKey = localStorage.getItem("api-key");
+  if (storedApiKey) {
+    document.getElementById("api-key").value = storedApiKey;
+  }
+});
+
+
 async function loadListNames() {
   try {
     const response = await fetch("data.json");
@@ -20,10 +28,13 @@ async function loadListNames() {
 
 async function fetchData() {
   const apiKey = document.getElementById("api-key").value;
+
   if (apiKey === "") {
     alert("Please enter an API key");
     return;
   }
+
+  localStorage.setItem("api-key", apiKey);
 
   const listSelect = document.getElementById("list-select");
   const selectedList = listSelect.value;
